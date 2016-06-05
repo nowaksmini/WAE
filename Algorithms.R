@@ -30,11 +30,11 @@ DifferentialEvolution <- function() {
   stop <- 0
   while (stop < maxIterations){
     for (i in 1:mi){
-      P[i] <- select(P)
-      print(P[i])
+      Parent <- select(P)
+      print(Parent)
       Parents <- sample(P)
       print(Parents)
-      M <- P[i] + F * (Parents[0] - Parents[1])
+      M <- Parent + F * (Parents[0] - Parents[1])
       print(M)
       O <- crossover(P[i], M)
       print(O)
