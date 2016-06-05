@@ -1,13 +1,15 @@
 library(cec2013)
 
-mi <- 3
+mi <- 10
+dimension <- 2
 maxIterations <- 2
 F <- 0.4
 a <- 0.5
 cr <- 0.5
+optimalValues = c(seq(-1400, -100, 100), seq(100, 1400, 100))
 
 SelectRandom <- function(P){
-  P[sample(1:length(P), 1)]
+  P[sample(1:mi, 1),]
 }
 
 SelectAverage <- function(P){
@@ -15,22 +17,24 @@ SelectAverage <- function(P){
 }
 
 BinomialCrossover <- function(x, y){
-  z <- array(0, length(x))
-  for(i in 1:length(x)){
+  z <- array(0, dimension)
+  a <- runif(1, 0, 1)
+  for(i in 1:dimension){
     if(a < cr){
       z[i] <- y[i]
     }
     else{
-      z[i] <- y[i]
+      z[i] <- x[i]
     }
   }
   z
 }
 
 ExponentialCrossover <- function(x, y){
-  z <- array(0, length(x))
+  z <- array(0, dimension)
   i <- 1
-  while (i <= length(x)){
+  a <- runif(1, 0, 1)
+  while (i <= dimension){
     if(a < cr){
       z[i] <- y[i]
       i <- i+1
@@ -38,19 +42,32 @@ ExponentialCrossover <- function(x, y){
       break;
     }
   }
-  while (i<= length(x)){
+  while (i <= dimension){
     z[i] <- x[i]
     i <- i+1
   }
   z
 }
 
-Tournament <- function(P, M){
-  P
+Tournament <- function(functionIndex, P, M){
+  #print("Tournament: ")
+  #print(P)
+  #print(M)
+  if (Error(functionIndex, P) <= Error(functionIndex, M)) {
+    return(P)
+  }
+  else {
+    return(M)
+  }
 }
 
-DifferentialEvolution <- function(crossover, select) {
-  P <- array(1:4, c(mi))
+Error <- function(functionIndex, p) {
+  return(abs(optimalValues[functionIndex] - cec2013(functionIndex, c(p))))
+}
+
+DifferentialEvolution <- function(crossover, select, functionIndex) {
+  randomPoints <- runif(mi*dimension, -100, 100)
+  P <- matrix(randomPoints, mi, dimension)
   print(P)
   H <- P
   t <- 0
@@ -58,11 +75,19 @@ DifferentialEvolution <- function(crossover, select) {
   while (stop < maxIterations){
     for (i in 1:mi){
       Parent <- select(P)
-      Parents <- P[sample(1:length(P), 2)]
-      M <- Parent + F * (Parents[1] - Parents[2])
-      O <- crossover(P[i], M)
+      Parents <- P[sample(1:mi, 2),]
+      #print("Parent:")
+      #print(Parent)
+      #print("Parents:")
+      #print(Parents)
+      M <- Parent + F * (Parents[1,] - Parents[2,])
+      #print("M")
+      #print(M)
+      O <- crossover(P[i,], M)
+      #print("O")
+      #print(O)
       H <- c(H,O)
-      P[i] <- Tournament(P[i], O)
+      P[i,] <- Tournament(functionIndex, P[i,], O)
     }
     stop <- stop + 1
   }
@@ -70,8 +95,8 @@ DifferentialEvolution <- function(crossover, select) {
   print(P)
 }
 
-DifferentialEvolution(ExponentialCrossover, SelectRandom)
-DifferentialEvolution(BinomialCrossover, SelectRandom)
-DifferentialEvolution(ExponentialCrossover, SelectAverage)
-DifferentialEvolution(BinomialCrossover, SelectAverage)
+DifferentialEvolution(ExponentialCrossover, SelectRandom, 1)
+DifferentialEvolution(BinomialCrossover, SelectRandom, 1)
+DifferentialEvolution(ExponentialCrossover, SelectAverage, 1)
+DifferentialEvolution(BinomialCrossover, SelectAverage, 1)
 
