@@ -6,12 +6,12 @@ F <- 0.4
 a <- 0.5
 cr <- 0.5
 
-select_random <- function(P){
+SelectRandom <- function(P){
   P[sample(1:length(P), 1)]
 }
 
-tournament <- function(P, M){
-  P
+SelectAverage <- function(P){
+  mean(P)
 }
 
 BinomialCrossover <- function(x, y){
@@ -40,12 +40,16 @@ ExponentialCrossover <- function(x, y){
   }
   while (i<= length(x)){
     z[i] <- x[i]
+    i <- i+1
   }
   z
 }
 
+Tournament <- function(P, M){
+  P
+}
 
-DifferentialEvolution <- function(crossover) {
+DifferentialEvolution <- function(crossover, select) {
   P <- array(1:4, c(mi))
   print(P)
   H <- P
@@ -53,12 +57,12 @@ DifferentialEvolution <- function(crossover) {
   stop <- 0
   while (stop < maxIterations){
     for (i in 1:mi){
-      Parent <- select_random(P)
+      Parent <- select(P)
       Parents <- P[sample(1:length(P), 2)]
       M <- Parent + F * (Parents[1] - Parents[2])
       O <- crossover(P[i], M)
       H <- c(H,O)
-      P[i] <- tournament(P[i], O)
+      P[i] <- Tournament(P[i], O)
     }
     stop <- stop + 1
   }
@@ -66,5 +70,8 @@ DifferentialEvolution <- function(crossover) {
   print(P)
 }
 
-DifferentialEvolution(ExponentialCrossover)
-DifferentialEvolution(BinomialCrossover)
+DifferentialEvolution(ExponentialCrossover, SelectRandom)
+DifferentialEvolution(BinomialCrossover, SelectRandom)
+DifferentialEvolution(ExponentialCrossover, SelectAverage)
+DifferentialEvolution(BinomialCrossover, SelectAverage)
+
