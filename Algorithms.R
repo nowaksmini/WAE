@@ -13,7 +13,11 @@ SelectRandom <- function(P){
 }
 
 SelectAverage <- function(P){
-  mean(P)
+  meanPoint <- array(0, dimension)
+  for (i in 1:dimension) {
+    meanPoint[i] <- mean(P[,i])
+  }
+  meanPoint
 }
 
 BinomialCrossover <- function(x, y){
