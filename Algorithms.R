@@ -1,51 +1,70 @@
-
 library(cec2013)
 
 mi <- 3
 maxIterations <- 2
 F <- 0.4
+a <- 0.5
+cr <- 0.5
 
-select <- function(P){
-  0
-}
-
-sample <- function(P){
-  c(0,0)
-}
-
-crossover <- function(P, M){
-  P
+select_random <- function(P){
+  P[sample(1:length(P), 1)]
 }
 
 tournament <- function(P, M){
   P
 }
 
-DifferentialEvolution <- function() {
-  P <- array(0, c(mi))
+BinomialCrossover <- function(x, y){
+  z <- array(0, length(x))
+  for(i in 1:length(x)){
+    if(a < cr){
+      z[i] <- y[i]
+    }
+    else{
+      z[i] <- y[i]
+    }
+  }
+  z
+}
+
+ExponentialCrossover <- function(x, y){
+  z <- array(0, length(x))
+  i <- 1
+  while (i <= length(x)){
+    if(a < cr){
+      z[i] <- y[i]
+      i <- i+1
+    }else{
+      break;
+    }
+  }
+  while (i<= length(x)){
+    z[i] <- x[i]
+  }
+  z
+}
+
+
+DifferentialEvolution <- function(crossover) {
+  P <- array(1:4, c(mi))
   print(P)
   H <- P
-  print(H)
   t <- 0
   stop <- 0
   while (stop < maxIterations){
     for (i in 1:mi){
-      Parent <- select(P)
-      print(Parent)
-      Parents <- sample(P)
-      print(Parents)
-      M <- Parent + F * (Parents[0] - Parents[1])
-      print(M)
+      Parent <- select_random(P)
+      Parents <- P[sample(1:length(P), 2)]
+      M <- Parent + F * (Parents[1] - Parents[2])
       O <- crossover(P[i], M)
-      print(O)
       H <- c(H,O)
-      print(H)
       P[i] <- tournament(P[i], O)
-      print(P[i])
     }
     stop <- stop + 1
   }
+  print("Population")
+  print(P)
 }
 
-DifferentialEvolution()
-
+DifferentialEvolution(ExponentialCrossover)
+DifferentialEvolution(BinomialCrossover)
