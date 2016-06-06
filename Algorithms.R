@@ -4,20 +4,27 @@ mi <- 10
 dimension <- 2
 maxIterations <- 2
 F <- 0.4
-a <- 0.5
 cr <- 0.5
 optimalValues = c(seq(-1400, -100, 100), seq(100, 1400, 100))
 
-SelectRandom <- function(P){
+SelectRandom <- function(functionIndex, P){
   P[sample(1:mi, 1),]
 }
 
-SelectAverage <- function(P){
+SelectAverage <- function(functionIndex, P){
   meanPoint <- array(0, dimension)
   for (i in 1:dimension) {
     meanPoint[i] <- mean(P[,i])
   }
   meanPoint
+}
+
+SelectBest <- function(functionIndex, P){
+  best <- P[1,]
+  for (i in 2:mi) {
+    best <- Tournament(functionIndex, P[i,], best)
+  }
+  best
 }
 
 BinomialCrossover <- function(x, y){
@@ -78,18 +85,10 @@ DifferentialEvolution <- function(crossover, select, functionIndex) {
   stop <- 0
   while (stop < maxIterations){
     for (i in 1:mi){
-      Parent <- select(P)
+      Parent <- select(functionIndex, P)
       Parents <- P[sample(1:mi, 2),]
-      #print("Parent:")
-      #print(Parent)
-      #print("Parents:")
-      #print(Parents)
       M <- Parent + F * (Parents[1,] - Parents[2,])
-      #print("M")
-      #print(M)
       O <- crossover(P[i,], M)
-      #print("O")
-      #print(O)
       H <- c(H,O)
       P[i,] <- Tournament(functionIndex, P[i,], O)
     }
@@ -103,4 +102,5 @@ DifferentialEvolution(ExponentialCrossover, SelectRandom, 1)
 DifferentialEvolution(BinomialCrossover, SelectRandom, 1)
 DifferentialEvolution(ExponentialCrossover, SelectAverage, 1)
 DifferentialEvolution(BinomialCrossover, SelectAverage, 1)
-
+DifferentialEvolution(ExponentialCrossover, SelectBest, 1)
+DifferentialEvolution(BinomialCrossover, SelectBest, 1)
