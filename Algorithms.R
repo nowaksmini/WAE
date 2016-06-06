@@ -1,8 +1,8 @@
 library(cec2013)
 
-mi <- 10
+mi <- 50
 dimension <- 2
-maxIterations <- 2
+maxIterations <- 200
 F <- 0.4
 cr <- 0.5
 optimalValues = c(seq(-1400, -100, 100), seq(100, 1400, 100))
@@ -79,7 +79,7 @@ Error <- function(functionIndex, p) {
 DifferentialEvolution <- function(crossover, select, functionIndex) {
   randomPoints <- runif(mi*dimension, -100, 100)
   P <- matrix(randomPoints, mi, dimension)
-  print(P)
+  #print(P)
   H <- P
   t <- 0
   stop <- 0
@@ -89,13 +89,14 @@ DifferentialEvolution <- function(crossover, select, functionIndex) {
       Parents <- P[sample(1:mi, 2),]
       M <- Parent + F * (Parents[1,] - Parents[2,])
       O <- crossover(P[i,], M)
-      H <- c(H,O)
+      H <- rbind(H,O)
       P[i,] <- Tournament(functionIndex, P[i,], O)
     }
     stop <- stop + 1
   }
-  print("Population")
-  print(P)
+  #print("Population")
+  #print(P)
+  plot(H[,1], H[,2], type="p")
 }
 
 DifferentialEvolution(ExponentialCrossover, SelectRandom, 1)
