@@ -1,10 +1,10 @@
 library(cec2013)
 
-mi <- 50
+mi <- 100
 dimension <- 2
-maxIterations <- 200
-F <- 0.4
-cr <- 0.5
+maxIterations <- 500
+F <- 0.1
+cr <- 0.9
 optimalValues = c(seq(-1400, -100, 100), seq(100, 1400, 100))
 
 SelectRandom <- function(functionIndex, P){
@@ -77,8 +77,9 @@ Error <- function(functionIndex, p) {
 }
 
 DifferentialEvolution <- function(crossover, select, functionIndex) {
-  randomPoints <- runif(mi*dimension, -100, 100)
+  randomPoints <- runif(mi*dimension, -80, -70)
   P <- matrix(randomPoints, mi, dimension)
+  print(cec2013(1,P))
   #print(P)
   H <- P
   t <- 0

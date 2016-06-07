@@ -1,0 +1,624 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[a4paper]{geometry}
+\usepackage{polski}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{url}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage[polish]{babel}
+\usepackage{listings}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definicja}
+
+\linespread{1.1}
+\title{Wstęp do algorytmów ewolucyjnych \\ Projekt nr 8: \\ \textbf{Zmodyfikowany algorytm ewolucji różnicowej}\\
+Raport z testów}
+
+\begin{document}
+	\maketitle
+	\vfill
+	\begin{flushright}
+		\textbf{Autorzy}:\\
+		Sylwia Nowak\\Katarzyna Węgiełek\\
+	\end{flushright}
+	
+	\newpage
+	\tableofcontents
+	\newpage
+	
+\newgeometry{tmargin=3cm, bmargin=3cm, lmargin=3cm, rmargin=3cm}
+
+\section{Porównanie różnych wariantów selekcji pierwszego rodzica i krzyżowania}
+?\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+\begin{table}[H]
+\centering
+\def\arraystretch{1.3}
+\setlength\tabcolsep{10pt}
+\caption{Porównanie algorytmów \textbf{DE/rand/1/bin} i \textbf{DE/avg/1/bin}}
+\vspace{8pt}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+	
+	\hline
+	\multirow{2}{*}{Nr funkcji} & \multicolumn{3}{c|}{DE/rand/1/bin} & \multicolumn{3}{c|}{DE/avg/1/bin}\\
+	\cline{2-7}
+	& min & max & avg & min & max & avg\\
+	\hline
+	1 &  &  &  &  &  &  \\
+	\hline
+	2 &  &  &  &  &  &  \\
+	\hline
+	3 &  &  &  &  &  &  \\
+	\hline
+	4 &  &  &  &  &  &  \\
+	\hline
+	5 &  &  &  &  &  &  \\
+	\hline
+	6 &  &  &  &  &  &  \\
+	\hline
+	7 &  &  &  &  &  &  \\
+	\hline
+	8 &  &  &  &  &  &  \\
+	\hline
+	9 &  &  &  &  &  &  \\
+	\hline
+	10 &  &  &  &  &  &  \\
+	\hline
+	11 &  &  &  &  &  &  \\
+	\hline
+	12 &  &  &  &  &  &  \\
+	\hline
+	13 &  &  &  &  &  &  \\
+	\hline
+	14 &  &  &  &  &  &  \\
+	\hline
+	15 &  &  &  &  &  &  \\
+	\hline
+	16 &  &  &  &  &  &  \\
+	\hline
+	17 &  &  &  &  &  &  \\
+	\hline
+	18 &  &  &  &  &  &  \\
+	\hline
+	19 &  &  &  &  &  &  \\
+	\hline
+	20 &  &  &  &  &  &  \\
+	\hline
+	21 &  &  &  &  &  &  \\
+	\hline
+	22 &  &  &  &  &  &  \\
+	\hline
+	23 &  &  &  &  &  &  \\
+	\hline
+	24 &  &  &  &  &  &  \\
+	\hline
+	25 &  &  &  &  &  &  \\
+	\hline
+	26 &  &  &  &  &  &  \\
+	\hline
+	27 &  &  &  &  &  &  \\
+	\hline
+	28 &  &  &  &  &  &  \\
+	\hline
+\end{tabular}	
+\end{table}
+
+\begin{table}[H]
+\centering
+\def\arraystretch{1.3}
+\setlength\tabcolsep{10pt}
+\caption{Porównanie algorytmów \textbf{DE/rand/1/exp} i \textbf{DE/avg/1/exp}}
+\vspace{8pt}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+	
+	\hline
+	\multirow{2}{*}{Nr funkcji} & \multicolumn{3}{c|}{DE/rand/1/exp} & \multicolumn{3}{c|}{DE/avg/1/exp}\\
+	\cline{2-7}
+	& min & max & avg & min & max & avg\\
+	\hline
+	1 &  &  &  &  &  &  \\
+	\hline
+	2 &  &  &  &  &  &  \\
+	\hline
+	3 &  &  &  &  &  &  \\
+	\hline
+	4 &  &  &  &  &  &  \\
+	\hline
+	5 &  &  &  &  &  &  \\
+	\hline
+	6 &  &  &  &  &  &  \\
+	\hline
+	7 &  &  &  &  &  &  \\
+	\hline
+	8 &  &  &  &  &  &  \\
+	\hline
+	9 &  &  &  &  &  &  \\
+	\hline
+	10 &  &  &  &  &  &  \\
+	\hline
+	11 &  &  &  &  &  &  \\
+	\hline
+	12 &  &  &  &  &  &  \\
+	\hline
+	13 &  &  &  &  &  &  \\
+	\hline
+	14 &  &  &  &  &  &  \\
+	\hline
+	15 &  &  &  &  &  &  \\
+	\hline
+	16 &  &  &  &  &  &  \\
+	\hline
+	17 &  &  &  &  &  &  \\
+	\hline
+	18 &  &  &  &  &  &  \\
+	\hline
+	19 &  &  &  &  &  &  \\
+	\hline
+	20 &  &  &  &  &  &  \\
+	\hline
+	21 &  &  &  &  &  &  \\
+	\hline
+	22 &  &  &  &  &  &  \\
+	\hline
+	23 &  &  &  &  &  &  \\
+	\hline
+	24 &  &  &  &  &  &  \\
+	\hline
+	25 &  &  &  &  &  &  \\
+	\hline
+	26 &  &  &  &  &  &  \\
+	\hline
+	27 &  &  &  &  &  &  \\
+	\hline
+	28 &  &  &  &  &  &  \\
+	\hline
+\end{tabular}	
+\end{table}
+
+\begin{table}[H]
+\centering
+\def\arraystretch{1.3}
+\setlength\tabcolsep{10pt}
+\caption{Porównanie algorytmów \textbf{DE/best/1/bin} i \textbf{DE/avg/1/bin}}
+\vspace{8pt}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+	
+	\hline
+	\multirow{2}{*}{Nr funkcji} & \multicolumn{3}{c|}{DE/best/1/bin} & \multicolumn{3}{c|}{DE/avg/1/bin}\\
+	\cline{2-7}
+	& min & max & avg & min & max & avg\\
+	\hline
+	1 &  &  &  &  &  &  \\
+	\hline
+	2 &  &  &  &  &  &  \\
+	\hline
+	3 &  &  &  &  &  &  \\
+	\hline
+	4 &  &  &  &  &  &  \\
+	\hline
+	5 &  &  &  &  &  &  \\
+	\hline
+	6 &  &  &  &  &  &  \\
+	\hline
+	7 &  &  &  &  &  &  \\
+	\hline
+	8 &  &  &  &  &  &  \\
+	\hline
+	9 &  &  &  &  &  &  \\
+	\hline
+	10 &  &  &  &  &  &  \\
+	\hline
+	11 &  &  &  &  &  &  \\
+	\hline
+	12 &  &  &  &  &  &  \\
+	\hline
+	13 &  &  &  &  &  &  \\
+	\hline
+	14 &  &  &  &  &  &  \\
+	\hline
+	15 &  &  &  &  &  &  \\
+	\hline
+	16 &  &  &  &  &  &  \\
+	\hline
+	17 &  &  &  &  &  &  \\
+	\hline
+	18 &  &  &  &  &  &  \\
+	\hline
+	19 &  &  &  &  &  &  \\
+	\hline
+	20 &  &  &  &  &  &  \\
+	\hline
+	21 &  &  &  &  &  &  \\
+	\hline
+	22 &  &  &  &  &  &  \\
+	\hline
+	23 &  &  &  &  &  &  \\
+	\hline
+	24 &  &  &  &  &  &  \\
+	\hline
+	25 &  &  &  &  &  &  \\
+	\hline
+	26 &  &  &  &  &  &  \\
+	\hline
+	27 &  &  &  &  &  &  \\
+	\hline
+	28 &  &  &  &  &  &  \\
+	\hline
+\end{tabular}	
+\end{table}
+
+\begin{table}[H]
+\centering
+\def\arraystretch{1.3}
+\setlength\tabcolsep{10pt}
+\caption{Porównanie algorytmów \textbf{DE/best/1/exp} i \textbf{DE/avg/1/exp}}
+\vspace{8pt}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+	
+	\hline
+	\multirow{2}{*}{Nr funkcji} & \multicolumn{3}{c|}{DE/best/1/exp} & \multicolumn{3}{c|}{DE/avg/1/exp}\\
+	\cline{2-7}
+	& min & max & avg & min & max & avg\\
+	\hline
+	1 &  &  &  &  &  &  \\
+	\hline
+	2 &  &  &  &  &  &  \\
+	\hline
+	3 &  &  &  &  &  &  \\
+	\hline
+	4 &  &  &  &  &  &  \\
+	\hline
+	5 &  &  &  &  &  &  \\
+	\hline
+	6 &  &  &  &  &  &  \\
+	\hline
+	7 &  &  &  &  &  &  \\
+	\hline
+	8 &  &  &  &  &  &  \\
+	\hline
+	9 &  &  &  &  &  &  \\
+	\hline
+	10 &  &  &  &  &  &  \\
+	\hline
+	11 &  &  &  &  &  &  \\
+	\hline
+	12 &  &  &  &  &  &  \\
+	\hline
+	13 &  &  &  &  &  &  \\
+	\hline
+	14 &  &  &  &  &  &  \\
+	\hline
+	15 &  &  &  &  &  &  \\
+	\hline
+	16 &  &  &  &  &  &  \\
+	\hline
+	17 &  &  &  &  &  &  \\
+	\hline
+	18 &  &  &  &  &  &  \\
+	\hline
+	19 &  &  &  &  &  &  \\
+	\hline
+	20 &  &  &  &  &  &  \\
+	\hline
+	21 &  &  &  &  &  &  \\
+	\hline
+	22 &  &  &  &  &  &  \\
+	\hline
+	23 &  &  &  &  &  &  \\
+	\hline
+	24 &  &  &  &  &  &  \\
+	\hline
+	25 &  &  &  &  &  &  \\
+	\hline
+	26 &  &  &  &  &  &  \\
+	\hline
+	27 &  &  &  &  &  &  \\
+	\hline
+	28 &  &  &  &  &  &  \\
+	\hline
+\end{tabular}	
+\end{table}
+
+\section{Porównanie różnych wartości parametru F}
+?\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+\begin{table}[H]
+\centering
+\def\arraystretch{1.3}
+\setlength\tabcolsep{10pt}
+\caption{Porównanie wyników dla różnych wartości parametru F dla algorytmu \textbf{klasycznego}}
+\vspace{8pt}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+	\hline
+	\multirow{2}{*}{Nr funkcji} & \multicolumn{3}{c|}{F = 0.2} & \multicolumn{3}{c|}{F = 0.5} & \multicolumn{3}{c|}{F = 0.8}\\
+	\cline{2-10}
+	& min & max & avg & min & max & avg & min & max & avg\\
+	\hline
+	1 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	2 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	3 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	4 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	5 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	6 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	7 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	8 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	9 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	10 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	11 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	12 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	13 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	14 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	15 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	16 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	17 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	18 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	19 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	20 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	21 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	22 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	23 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	24 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	25 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	26 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	27 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	28 &  &  &  &  &  &  &  &  &  \\
+	\hline
+\end{tabular}	
+\end{table}
+
+\begin{table}[H]
+\centering
+\def\arraystretch{1.3}
+\setlength\tabcolsep{10pt}
+\caption{Porównanie wyników dla różnych wartości parametru F dla algorytmu \textbf{zmodyfikowanego}}
+\vspace{8pt}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+	
+	\hline
+	\multirow{2}{*}{Nr funkcji} & \multicolumn{3}{c|}{F = 0.2} & \multicolumn{3}{c|}{F = 0.5} & \multicolumn{3}{c|}{F = 0.8}\\
+	\cline{2-10}
+	& min & max & avg & min & max & avg & min & max & avg\\
+	\hline
+	1 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	2 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	3 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	4 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	5 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	6 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	7 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	8 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	9 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	10 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	11 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	12 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	13 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	14 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	15 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	16 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	17 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	18 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	19 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	20 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	21 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	22 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	23 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	24 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	25 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	26 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	27 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	28 &  &  &  &  &  &  &  &  &  \\
+	\hline
+\end{tabular}	
+\end{table}
+
+\section{Porównanie różnych wartości parametru Cr}
+?\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+\begin{table}[H]
+\centering
+\def\arraystretch{1.3}
+\setlength\tabcolsep{10pt}
+\caption{Porównanie wyników dla różnych wartości parametru $C_r$ dla algorytmu \textbf{klasycznego}}
+\vspace{8pt}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+	
+	\hline
+	\multirow{2}{*}{Nr funkcji} & \multicolumn{3}{c|}{$C_r$ = 0.2} & \multicolumn{3}{c|}{$C_r$ = 0.5} & \multicolumn{3}{c|}{$C_r$ = 0.8}\\
+	\cline{2-10}
+	& min & max & avg & min & max & avg & min & max & avg\\
+	\hline
+	1 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	2 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	3 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	4 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	5 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	6 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	7 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	8 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	9 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	10 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	11 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	12 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	13 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	14 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	15 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	16 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	17 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	18 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	19 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	20 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	21 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	22 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	23 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	24 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	25 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	26 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	27 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	28 &  &  &  &  &  &  &  &  &  \\
+	\hline
+\end{tabular}	
+\end{table}
+
+\begin{table}[H]
+\centering
+\def\arraystretch{1.3}
+\setlength\tabcolsep{10pt}
+\caption{Porównanie wyników dla różnych wartości parametru $C_r$ dla algorytmu \textbf{zmodyfikowanego}}
+\vspace{8pt}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+	
+	\hline
+	\multirow{2}{*}{Nr funkcji} & \multicolumn{3}{c|}{$C_r$ = 0.2} & \multicolumn{3}{c|}{$C_r$ = 0.5} & \multicolumn{3}{c|}{$C_r$ = 0.8}\\
+	\cline{2-10}
+	& min & max & avg & min & max & avg & min & max & avg\\
+	\hline
+	1 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	2 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	3 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	4 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	5 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	6 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	7 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	8 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	9 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	10 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	11 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	12 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	13 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	14 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	15 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	16 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	17 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	18 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	19 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	20 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	21 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	22 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	23 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	24 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	25 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	26 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	27 &  &  &  &  &  &  &  &  &  \\
+	\hline
+	28 &  &  &  &  &  &  &  &  &  \\
+	\hline
+\end{tabular}	
+\end{table}
+
+\end{document}
