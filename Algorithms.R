@@ -1,10 +1,5 @@
 library(cec2013)
 
-mi <- 100
-dimension <- 2
-maxIterations <- 500
-F <- 0.1
-cr <- 0.9
 optimalValues = c(seq(-1400, -100, 100), seq(100, 1400, 100))
 
 SelectRandom <- function(functionIndex, P){
@@ -79,7 +74,7 @@ Error <- function(functionIndex, p) {
 DifferentialEvolution <- function(crossover, select, functionIndex) {
   randomPoints <- runif(mi*dimension, -80, -70)
   P <- matrix(randomPoints, mi, dimension)
-  print(cec2013(1,P))
+  #print(cec2013(1,P))
   #print(P)
   H <- P
   t <- 0
@@ -88,7 +83,7 @@ DifferentialEvolution <- function(crossover, select, functionIndex) {
     for (i in 1:mi){
       Parent <- select(functionIndex, P)
       Parents <- P[sample(1:mi, 2),]
-      M <- Parent + F * (Parents[1,] - Parents[2,])
+      M <- Parent + f * (Parents[1,] - Parents[2,])
       O <- crossover(P[i,], M)
       H <- rbind(H,O)
       P[i,] <- Tournament(functionIndex, P[i,], O)
@@ -97,12 +92,6 @@ DifferentialEvolution <- function(crossover, select, functionIndex) {
   }
   #print("Population")
   #print(P)
-  plot(H[,1], H[,2], type="p")
+  #plot(H[,1], H[,2], type="p")
+  return(P)
 }
-
-DifferentialEvolution(ExponentialCrossover, SelectRandom, 1)
-DifferentialEvolution(BinomialCrossover, SelectRandom, 1)
-DifferentialEvolution(ExponentialCrossover, SelectAverage, 1)
-DifferentialEvolution(BinomialCrossover, SelectAverage, 1)
-DifferentialEvolution(ExponentialCrossover, SelectBest, 1)
-DifferentialEvolution(BinomialCrossover, SelectBest, 1)
