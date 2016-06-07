@@ -1,19 +1,18 @@
 source("Algorithms.R")
 
 
-mi <- 100
+mi <- 50
 dimension <- 2
-maxIterations <- 10000
+maxIterations <- 500
 
 runTest <- function(selectionType, crossoverType, fileName) {
-  results <- matrix(data=0, nrow=28, ncol=2)
+  result <- matrix(data=0, nrow=1, ncol=2)
   for (fun_nr in 1:28) {
     population <- DifferentialEvolution(crossoverType, selectionType, fun_nr)
-    results[fun_nr, 1] <- fun_nr
-    results[fun_nr, 2] <- mean(cec2013(fun_nr, population))
+    result[1,1] <- fun_nr
+    result[1,2] <- mean(cec2013(fun_nr, population))
+    write(t(result), file=fileName, ncolumns=2, append=TRUE, sep="\t")
   }
-  
-  write(t(results), file=fileName, ncolumns=2, append=FALSE, sep="\t")
 }
 
 # Testy
