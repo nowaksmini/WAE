@@ -3,7 +3,7 @@ source("Algorithms.R")
 
 mi <- 50
 dimension <- 2
-maxIterations <- 500
+maxIterations <- 1000
 
 runTest <- function(selectionType, crossoverType, fileName) {
   result <- matrix(data=0, nrow=1, ncol=2)

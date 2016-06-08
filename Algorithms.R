@@ -72,7 +72,7 @@ Error <- function(functionIndex, p) {
 }
 
 DifferentialEvolution <- function(crossover, select, functionIndex) {
-  randomPoints <- runif(mi*dimension, -80, -70)
+  randomPoints <- runif(mi*dimension, -100, 100)
   P <- matrix(randomPoints, mi, dimension)
   #print(cec2013(1,P))
   #print(P)
