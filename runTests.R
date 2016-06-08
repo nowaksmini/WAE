@@ -57,5 +57,3 @@ cr <- 0.8
 runTest(SelectRandom, BinomialCrossover, "cr_08_rand_bin.txt")
 runTest(SelectAverage, BinomialCrossover, "cr_08_avg_bin.txt")
 
-
-
