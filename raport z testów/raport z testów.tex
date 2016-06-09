@@ -37,8 +37,26 @@ Raport z testów}
 	
 \newgeometry{tmargin=3cm, bmargin=3cm, lmargin=3cm, rmargin=3cm}
 
+\section{Treść zadania}
+	Celem projektu była implementacja i testowanie algorytmu ewolucji różnicowej, w którym jako pierwszy z 3 punktów stosowanych podczas mutacji, wybierana jest średnia punktów populacji. Metoda została porównana z klasyczną wersją ewolucji różnicowej. Testy zostały przeprowadzone na benchmarku CEC 2013.
+	
 \section{Porównanie różnych wariantów selekcji pierwszego rodzica i krzyżowania}
-?\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+Przeprowadzone testy miały za zadanie porównać skuteczność klasycznego algorytmu ewolucji różnicowej i jego zmodyfikowanej wersji. Zostały uwzględnione dwa typy selekcji pierwszego rodzica - wybór losowego osobnika z populacji (rand) oraz wybór najlepszego osobnika (best). Wykorzystane zostały też dwie metody krzyżowania - dwumianowe (bin) i wykładnicze (exp). 
+
+Zatem obliczenia zostały wykonane dla następujących wariantów algorytmu:
+\begin{itemize}
+	\item DE/rand/1/bin
+    \item DE/rand/1/exp
+	\item DE/best/1/bin
+    \item DE/best/1/exp
+	\item DE/avg/1/bin
+    \item DE/avg/1/exp
+\end{itemize}
+Ze względu na długi czas obliczeń została wprowadzona zmiana w stosunku do dokumentacji wstępnej -  zrezygnowałyśmy z przeprowadzania testów dla wariantów algorytmów, wykorzystujących 2 różnice wektorów w mutacji.
+
+Dla każdego algorytmu zostały przeprowadzone testy z użyciem 28 funkcji z benchmarku CEC 2013. Dla każdej funkcji obliczenia zostały powtórzone 5 razy z tymi samymi wartościami parametrów. Tabele poniżej przedstawiają uśrednione wyniki z 5 uruchomień. Dla każdej wersji algorytmu podana została średnia wyników uzyskanych przez osobników z populacji po zakończeniu obliczeń oraz odpowiadający jej błąd, obliczany jako różnica między uzyskanym średnim wynikiem a optymalną wartością dla danej funkcji benchmarku.\\
+
+Wszystkie obliczenia zostały przeprowadzone dla populacji złożonej z 50 osobników, zainicjowanej według jednostajnego rozkładu losowego w przestrzeni poszukiwań (przedział $[-100,100]^D$). Rozpatrywane zostały problemy o wymiarowości 2. Algorytm kończył pracę po wykonaniu 1000 iteracji. Przyjęte zostały wartości parametrów $F = 0.5$ i $c_r = 0.5$.
 
 \begin{table}[H]
 \centering
@@ -214,7 +232,9 @@ Raport z testów}
 \end{table}
 
 \section{Porównanie różnych wartości parametru F}
-?\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+Przetestowany został również wpływ parametru F na skuteczność algorytmu ewolucji różnicowej. Przeprowadzone testy uwzględniały trzy różne wartości tego parametru: $0.2$, $0.5$ oraz $0.8$. Obiczenia zostały przeprowadzone dla klasycznej wersji algorytmu ewolucji różnicowej, wykorzystującej selekcję losową i krzyżowanie dwumianowe (\textbf{DE/rand/1/bin}) oraz dla wersji zmodyfikowanej, również korzystającej z krzyżowania dwumianowego (\textbf{DE/avg/1/bin}). Poniższe tabele przedstawiają średnią wyników uzyskanych przez punkty populacji po zakończeniu obliczeń oraz błąd, obliczany jako różnica między średnim wynikiem a wartością optymalną dla danej funkcji benchmarku.\\
+
+Podobnie jak poprzednio testy zostały przeprowadzone dla populacji złożonej z 50 osobników, wymiarowość problemu wynosiła 2, a parametr $c_r = 0.5$ Obliczenia zatrzymywały się po wykonaniu 1000 iteracji. Dla każdej z 28 funkcji testy zostały powtórzone 5 razy, wyniki przedstawione w tabelach są średnią z 5 uruchomień dla danej funkcji.
 
 \begin{table}[H]
 \centering
@@ -302,7 +322,9 @@ Raport z testów}
 \end{table}
 
 \section{Porównanie różnych wartości parametru Cr}
-?\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+Zostało zbadane także działanie algorytmu ewolucji różnicowej dla różnych wartości parametru $c_r$. Przeprowadzone testy uwzględniały trzy różne wartości tego parametru: $0.2$, $0.5$ oraz $0.8$. Tak jak dla paprametru F, obliczenia zostały przeprowadzone z wykorzystaniem dwóch wersji algorytmu - klasycznej, wykorzystującej selekcję losową i krzyżowanie dwumianowe (\textbf{DE/rand/1/bin}) oraz zmodyfikowanej, korzystającej z krzyżowania dwumianowego (\textbf{DE/avg/1/bin}). Poniższe tabele przedstawiają średnią wyników uzyskanych przez punkty populacji po zakończeniu obliczeń oraz błąd, obliczany jako różnica między średnim wynikiem a wartością optymalną dla danej funkcji benchmarku.\\
+
+Podobnie jak poprzednio testy zostały przeprowadzone dla populacji złożonej z 50 osobników, wymiarowość problemu wynosiła 2. Parametr F był równy 0.5. Obliczenia zatrzymywały się po wykonaniu 1000 iteracji. Dla każdej z 28 funkcji testy zostały powtórzone 5 razy, wyniki przedstawione w tabelach są średnią z 5 uruchomień dla danej funkcji.
 
 \begin{table}[H]
 \centering
